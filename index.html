@@ -1,0 +1,65 @@
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <meta http-equiv="Permissions-Policy" content="geolocation=(self)">
+                <title>Geolocation Visual</title>
+                <style>
+                    #visual-container {
+                        width: 100%;
+                        height: 100%;
+                        background-color: #ffffff;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        border: 1px solid #000;
+                    }
+                    .label {
+                        font-size: 16px;
+                        margin: 5px;
+                    }
+                </style>
+            </head>
+            <body>
+                <div id="visual-container">
+                    <div id="latitude" class="label">Latitude: --</div>
+                    <div id="longitude" class="label">Longitude: --</div>
+                </div>
+                <script>
+                    (function() {
+                        console.log("Script de geolocalização iniciado.");
+                        if (navigator.geolocation) {
+                            navigator.geolocation.getCurrentPosition(
+                                function(position) {
+                                    const latitudeElement = document.getElementById('latitude');
+                                    const longitudeElement = document.getElementById('longitude');
+                                    if (latitudeElement && longitudeElement) {
+                                        latitudeElement.textContent = "Latitude: " + position.coords.latitude;
+                                        longitudeElement.textContent = "Longitude: " + position.coords.longitude;
+                                    }
+                                },
+                                function(error) {
+                                    const latitudeElement = document.getElementById('latitude');
+                                    const longitudeElement = document.getElementById('longitude');
+                                    if (latitudeElement && longitudeElement) {
+                                        latitudeElement.textContent = "Erro ao obter localização";
+                                        longitudeElement.textContent = "Erro ao obter localização";
+                                    }
+                                    console.error("Erro ao obter localização: ", error.message);
+                                }
+                            );
+                        } else {
+                            const latitudeElement = document.getElementById('latitude');
+                            const longitudeElement = document.getElementById('longitude');
+                            if (latitudeElement && longitudeElement) {
+                                latitudeElement.textContent = "Geolocalização não suportada";
+                                longitudeElement.textContent = "Geolocalização não suportada";
+                            }
+                            console.error("Geolocalização não é suportada neste navegador.");
+                        }
+                    })();
+                </script>
+            </body>
+            </html>
